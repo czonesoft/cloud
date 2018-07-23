@@ -31,10 +31,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @EnableAutoConfiguration
 @SpringBootApplication
 public class ApigatewayApplication {
-    /*@Bean
-    public RouteDefinitionLocator discoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient) {
-        return new DiscoveryClientRouteDefinitionLocator(discoveryClient);
-    }*/
+    //@Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route(r -> r.path("/u").uri("http://localhost:8001/user"))
+                .build();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(ApigatewayApplication.class, args);
