@@ -3,11 +3,10 @@ spring:
     name: ApiGateway
   cloud:        # spring cloud gateway 路由配置方式
     gateway:
-      default-filters:
       discovery:      #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
         locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
-          enabled: false
-      routes:
+          enabled: true
+#      routes:
 #      - id: 163                     #网关路由到网易官网
 #        uri: http://www.163.com/
 #        predicates:
@@ -16,10 +15,12 @@ spring:
 #        uri: lb://ORDER-SERVICE
 #        predicates:
 #          - Path=/ORDER-SERVICE/**
-       - id: user-service            #网关路由到用户服务user-service
-         uri: lb://PROVIDERUSER
-         predicates:
-           - Path=/u/**
+#       - id: user-service            #网关路由到用户服务user-service
+#         uri: lb://PROVIDERUSER
+#         predicates:
+#           - Path=/u/**
+#      filters:
+#            - RewritePath=/user/(?<segment>.*), /$\{segment}
 
 server:
   port: 5001
@@ -31,11 +32,13 @@ logging:
 
 eureka:
   instance:
-    prefer-ip-address: true
-    status-page-url-path: /actuator/info
-    health-check-url-path: /actuator/health
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+    #prefer-ip-address: true
+    #status-page-url-path: /actuator/info
+    #health-check-url-path: /actuator/health
   client:
     register-with-eureka: true
     fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/ #,http://localhost:8001/eureka/
