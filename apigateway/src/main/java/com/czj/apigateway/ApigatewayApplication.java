@@ -9,7 +9,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-//@EnableEurekaClient
 @EnableDiscoveryClient
 public class ApigatewayApplication {
 //    @Bean
@@ -17,15 +16,15 @@ public class ApigatewayApplication {
 //        return builder.routes().build();
 //    }
 
-    @Bean
-    public RouteLocator routes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(r -> r.path("/u/**")
-                        .filters(f -> f.rewritePath("/u/(?<path>.*)", "/${path}"))
-                        .uri("lb://PROVIDERUSER")// http://localhost:8001/user/1
-                        .id("user-service"))
-                .build();
-    }
+//    @Bean
+//    public RouteLocator routes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route(r -> r.path("/u/**")
+//                        .filters(f -> f.rewritePath("/u/(?<path>.*)", "/${path}"))
+//                        .uri("lb://PROVIDERUSER")// http://localhost:8001/user/1
+//                        .id("user-service"))
+//                .build();
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(ApigatewayApplication.class, args);
