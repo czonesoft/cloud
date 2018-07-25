@@ -1,3 +1,6 @@
+server:
+  port: 5001
+
 spring:
   application:
     name: ApiGateway
@@ -15,31 +18,30 @@ spring:
 #        uri: lb://ORDER-SERVICE
 #        predicates:
 #          - Path=/ORDER-SERVICE/**
-      - id: user-service            #网关路由到用户服务user-service
+      - id: PROVIDERUSER            #网关路由到用户服务user-service
         uri: lb://PROVIDERUSER  #http://localhost:8001/user
         predicates:
         - Path=/u/**
-      filters:
+        filters:
         - RewritePath=/u/(?<path>.*), /$\{path}
 #        - StripPrefix=1
-
-server:
-  port: 5001
 
 
 logging:
   level:
     org.springframework.cloud.gateway: debug
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
 eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 10
-    lease-expiration-duration-in-seconds: 30
-    #prefer-ip-address: true
-    #status-page-url-path: /actuator/info
-    #health-check-url-path: /actuator/health
+#  instance:
+#    lease-renewal-interval-in-seconds: 10
+#    lease-expiration-duration-in-seconds: 30
+#    prefer-ip-address: true
+#    status-page-url-path: /actuator/info
+#    health-check-url-path: /actuator/health
   client:
-    register-with-eureka: true
-    fetch-registry: false
+#    register-with-eureka: true
+#    fetch-registry: false
     service-url:
       defaultZone: http://localhost:8000/eureka/ #,http://localhost:8001/eureka/
