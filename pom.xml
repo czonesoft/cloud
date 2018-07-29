@@ -20,8 +20,8 @@
 
     <modules>
         <module>registercenter</module>
+        <module>apigateway</module>
         <module>svc.provider.user</module>
-		<module>apigateway</module>
     </modules>
 
     <properties>
